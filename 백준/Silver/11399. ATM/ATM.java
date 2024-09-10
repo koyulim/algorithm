@@ -3,11 +3,14 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        int size = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int size = Integer.parseInt(br.readLine());
+        String[] str = br.readLine().split(" ");
         int[] list = new int[size];
-        for (int i = 0; i < size; i++) {
-            list[i] = sc.nextInt();
+        
+        for (int i = 0; i < str.length; i++) {
+            list[i] = Integer.parseInt(str[i]);
         }
 
         Arrays.sort(list);
@@ -19,6 +22,7 @@ public class Main {
             answer += add;
         }
 
-        System.out.println(answer);
+        bw.write(answer + "\n");
+        bw.flush();
     }
 }

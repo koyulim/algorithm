@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 import java.awt.Point;
+import java.awt.GraphicsDevice.WindowTranslucency;
 
 public class Main {
 
@@ -17,11 +18,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st;
-  
-        st = new StringTokenizer(br.readLine());
-
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
   
@@ -58,8 +55,6 @@ public class Main {
                 }
             }
         }
-
-        bw.write(cnt + "\n");
-        bw.flush();
+        System.out.println(cnt);
     }
 }

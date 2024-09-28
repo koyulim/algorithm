@@ -18,9 +18,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        String[] input = br.readLine().split(" ");
-        int n = Integer.parseInt(input[0]);
-        int m = Integer.parseInt(input[1]);
+        StringTokenizer st;
+  
+        st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+  
 
         Node[] nodes = new Node[n + 1];
         for (int i = 0; i <= n; i++) {
@@ -28,9 +32,9 @@ public class Main {
         }
 
         for (int i = 0; i < m; i++) {
-            String[] input2 = br.readLine().split(" ");
-            int a = Integer.parseInt(input2[0]);
-            int b = Integer.parseInt(input2[1]);
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
             nodes[a].neighbor.add(nodes[b]);
             nodes[b].neighbor.add(nodes[a]);

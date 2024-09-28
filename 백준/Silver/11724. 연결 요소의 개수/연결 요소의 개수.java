@@ -8,17 +8,17 @@ public class Main {
         int n;
         List<Node> neighbor;
         boolean visit;
+
         Node(int n) {
             this.n = n;
             neighbor = new ArrayList<>();
         }
     }
 
-
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        String[] input = br.readLine().split(" ");        
+        String[] input = br.readLine().split(" ");
         int n = Integer.parseInt(input[0]);
         int m = Integer.parseInt(input[1]);
 
@@ -44,11 +44,11 @@ public class Main {
                 queue.add(nodes[j]);
                 nodes[j].visit = true;
                 while (!queue.isEmpty()) {
-                    int node = queue.poll().n;
-                    for (Node conect : nodes[node].neighbor) {
+                    Node node = queue.poll();
+                    for (Node conect : node.neighbor) {
                         if (!conect.visit) {
                             queue.add(conect);
-                            nodes[conect.n].visit = true;
+                            conect.visit = true;
                         }
                     }
                 }

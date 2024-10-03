@@ -27,6 +27,9 @@ public class Main {
             }
         }
 
+        int[] dx = {0, 0, 1, -1};
+        int[] dy = {1, -1, 0, 0};
+
         Queue<Point> queue = new LinkedList<>();
         queue.add(new Point(goalX, goalY));
         list[goalX][goalY] = 0;
@@ -36,32 +39,13 @@ public class Main {
             int y = p.y;
             visit[x][y] = true;
 
-            if (y + 1 < m) {
-                if (list[x][y + 1] == 1 && visit[x][y + 1] == false) {
-                    queue.add(new Point(x, y + 1));
-                    list[x][y + 1] = list[x][y] + 1;
-                }
-            }
+            for (int i = 0; i < 4; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
 
-            if (y > 0) {
-                if (list[x][y - 1] == 1 && visit[x][y - 1] == false) {
-                    queue.add(new Point(x, y -1));
-                    list[x][y - 1] = list[x][y] + 1;
-                }
-            }
-
-            if (x + 1 < n) {
-                if (list[x + 1][y] == 1 && visit[x + 1][y] == false) {
-                    queue.add(new Point(x + 1, y));
-                    list[x + 1][y] = list[x][y] + 1;
-
-                }
-            }
-
-            if (x > 0) {
-                if (list[x - 1][y] == 1 && visit[x - 1][y] == false) {
-                    queue.add(new Point(x - 1, y));
-                    list[x - 1][y] = list[x][y] + 1;
+                if (nx >= 0 && ny >= 0 && nx < n && ny < m && list[nx][ny] == 1 && !visit[nx][ny]) {
+                    queue.add(new Point(nx, ny));
+                    list[nx][ny] = list[x][y] + 1;
                 }
             }
 
@@ -69,11 +53,8 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (list[i][j] == 1 && visit[i][j] == false) {
-                    bw.write(-1 + " ");
-                } else {
-                    bw.write(list[i][j] + " ");
-                }
+                if (list[i][j] == 1 && visit[i][j] == false)bw.write(-1 + " ");
+                else bw.write(list[i][j] + " ");
             }
             bw.write("\n");
         }

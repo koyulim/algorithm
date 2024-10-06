@@ -28,41 +28,25 @@ public class Main {
             }
         }
 
+        int[] row = {0, 0, 1, -1};
+        int[] col = {1, -1, 0, 0};
+
+        
         while (!queue.isEmpty()) {
             Point point = queue.poll();
             int x = point.x;
             int y = point.y;
+            visit[x][y] = true;
 
-            if (y + 1 < m) {
-                if (list[x][y + 1] == 0 && visit[x][y + 1] == false) {
-                    queue.add(new Point(x, y + 1));
-                    visit[x][y + 1] = true;
-                    list[x][y + 1] = list[x][y] + 1;
-                }
-            }
-            if (y > 0) {
-                if (list[x][y - 1] == 0 && visit[x][y - 1] == false) {
-                    queue.add(new Point(x, y - 1));
-                    visit[x][y - 1] = true;
-                    list[x][y - 1] = list[x][y] + 1;
+            for (int i = 0; i < 4; i++) {
+                int nx = x + row[i];
+                int ny = y + col[i];
 
+                if (ny < m && ny >= 0 && nx < n && nx >= 0 && list[nx][ny] == 0 && visit[nx][ny] == false) {
+                    queue.add(new Point(nx, ny));
+                    list[nx][ny] = list[x][y] + 1;
                 }
-            }
-            if (x + 1 < n) {
-                if (list[x + 1][y] == 0 && visit[x + 1][y] == false) {
-                    queue.add(new Point(x + 1, y));
-                    visit[x + 1][y] = true;
-                    list[x + 1][y] = list[x][y] + 1;
 
-                }
-            }
-            if (x > 0) {
-                if (list[x - 1][y] == 0 && visit[x - 1][y] == false) {
-                    queue.add(new Point(x - 1, y));
-                    visit[x - 1][y] = true;
-                    list[x - 1][y] = list[x][y] + 1;
-
-                }
             }
         }
 
@@ -87,7 +71,7 @@ public class Main {
         } else {
             result = result - 1;
         }
-        
+
         bw.write(result + "\n");
         bw.flush();
     }

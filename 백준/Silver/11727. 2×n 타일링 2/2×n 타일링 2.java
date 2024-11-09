@@ -14,7 +14,7 @@ public class Main {
             else dp[i] = ((dp[i - 1] * 2) - 1) % 10007;
         }   
 
-        bw.write((dp[n] % 10007) + "\n");
+        bw.write(dp[n] + "\n");
         bw.flush();
     }
 }

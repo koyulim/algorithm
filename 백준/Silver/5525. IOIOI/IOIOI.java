@@ -9,18 +9,20 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         int m = Integer.parseInt(br.readLine());
         String s = br.readLine();
-        String str = "";
 
-        for (int i = 0; i < n; i++) str += "IO";
-        str += "I";
-
-        int start = 0;
-        int end = str.length();
         int cnt = 0;
-        while (end <= m) {
-            if (s.substring(start, end).equals(str)) cnt++;
-            start++;
-            end++;
+        int paternCnt = 0;
+        for (int i = 0; i < m - 1; i++) {
+            if (s.charAt(i) == 'I' && s.charAt(i + 1) == 'O' && i + 2 < m && s.charAt(i + 2) == 'I') {
+                paternCnt++;
+                if (paternCnt == n) {
+                    cnt++;
+                    paternCnt--;
+                }
+                i++;
+            } else {
+                paternCnt = 0;
+            }
         }
 
         bw.write(cnt + "\n");

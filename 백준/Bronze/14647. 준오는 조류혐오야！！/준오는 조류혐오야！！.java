@@ -10,68 +10,35 @@ public class Main {
         int n = Integer.parseInt(nm[0]);
         int m = Integer.parseInt(nm[1]);
 
-        int[][] list = new int[n][m];
+        int total = 0;
+        int[] rowCounts = new int[n];
+        int[] colCounts = new int[m];
         for (int i = 0; i < n; i++) {
             String[] input = br.readLine().split(" ");
             for (int j = 0; j < m; j++) {
-                String str = input[j];
-                int cnt = 0;
-                for (int z = 0; z < str.length(); z++) {
-                    if (str.charAt(z) == '9') {
-                        cnt++;
+                int count9 = 0;
+                String cell = input[j];
+                for (int z = 0; z < cell.length(); z++) {
+                    if (cell.charAt(z) == '9') {
+                        count9++;
                     }
                 }
-                list[i][j] = cnt;
+                rowCounts[i] += count9;
+                colCounts[j] += count9;
+                total += count9;
             }
         }
 
-        int resultX = 0;
-        int resultY = 0;
-        int x = 0;
-        int y = 0;
-
-        for (int i = 0; i < n; i++) {
-            int total = 0;
-            for (int j = 0; j < m; j++) {
-                total += list[i][j]; 
-            }
-            if (resultX < total) {
-                resultX = total;
-                x = i;
-            }
+        int maxRow = 0;
+        int maxCol = 0;
+        for (int count : rowCounts) {
+            maxRow = Math.max(maxRow, count);
         }
-
-        for (int i = 0; i < m; i++) {
-            int total = 0;
-            for (int j = 0; j < n; j++) {
-                total += list[j][i];
-            }
-            if (resultY < total) {
-                resultY = total;
-                y = i;
-            }
+        for (int count : colCounts) {
+            maxCol = Math.max(maxCol, count);
         }
         
-        int result = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (resultX > resultY) {
-                    if (i == x) {
-                        continue;
-                    } else {
-                        result += list[i][j];
-                    }
-                } else if (resultX <= resultY) {
-                    if (j == y) {
-                        continue;
-                    } else {
-                        result += list[i][j];
-                    }
-                } 
-            }
-        }
-
-        bw.write(result + "\n");
+        bw.write((total - Math.max(maxRow, maxCol)) + "\n");
         bw.flush();
     }
 }

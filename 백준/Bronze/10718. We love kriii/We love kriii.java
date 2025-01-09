@@ -1,7 +1,5 @@
 import java.io.*;
 import java.util.*;
-import org.w3c.dom.Node;
-
 public class Main {
 
     public static void main(String[] args) throws IOException {

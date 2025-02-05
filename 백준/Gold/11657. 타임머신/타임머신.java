@@ -50,27 +50,25 @@ public class Main {
         Arrays.fill(mdt, Integer.MAX_VALUE);
         mdt[1] = 0;
 
-        for (int i = 1; i < n; i++) {
+        boolean chack = false;
+        for (int i = 1; i <= n; i++) {
+            boolean update = false;
             for (int j = 1; j <= n; j++) {
                 for (Edge edge : nodes[j].edges) {
                     if (mdt[j] != Integer.MAX_VALUE && mdt[edge.node] > mdt[j] + edge.weight) {
                         mdt[edge.node] = mdt[j] + edge.weight;
+                        update = true;
+
+                        if (i == n) {
+                            chack = true;
+                        }
                     }
                 }
             }
+
+            if (!update) break;
         }
 
-        boolean chack = false;
-        for (int i = 1; i <= n; i++) {
-            for (Edge edge : nodes[i].edges) {
-                if (mdt[i] != Integer.MAX_VALUE && mdt[edge.node] > mdt[i] + edge.weight) {
-                    chack = true;
-                    break;
-                }
-            }
-        }
-        
-        
         if (chack) {
             bw.write("-1" + "\n");
         } else {

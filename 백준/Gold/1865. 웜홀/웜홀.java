@@ -3,14 +3,22 @@ import java.util.*;
 
 public class Main {
 
+    private static class Node {
+        int node;
+        List<Edge> edges;
+
+        Node(int node) {
+            this.node = node;
+            edges = new ArrayList();
+        }
+    }
+
     private static class Edge {
-        int start;
-        int end;
+        int node;
         int weight;
 
-        Edge(int start, int end, int weight) {
-            this.start = start;
-            this.end = end;
+        Edge(int node, int weight) {
+            this.node = node;
             this.weight = weight;
         }
     }
@@ -26,7 +34,11 @@ public class Main {
             int m = Integer.parseInt(nmw[1]);
             int w = Integer.parseInt(nmw[2]);
 
-            List<Edge> edges = new ArrayList<>();
+            Node[] nodes = new Node[n + 1];
+            for (int i = 1; i <= n; i++) {
+                nodes[i] = new Node(i);
+            }
+
             for (int i = 0; i < m + w; i++) {
                 String[] input = br.readLine().split(" ");
                 int start = Integer.parseInt(input[0]);
@@ -34,16 +46,16 @@ public class Main {
                 int weight = Integer.parseInt(input[2]);
 
                 if (i < m) {
-                    edges.add(new Edge(start, end, weight));
-                    edges.add(new Edge(end, start, weight));
+                    nodes[start].edges.add(new Edge(end, weight));
+                    nodes[end].edges.add(new Edge(start, weight));
                 } else {
-                    edges.add(new Edge(start, end, weight * -1));
+                    nodes[start].edges.add(new Edge(end, weight * -1));
                 }
             }
 
             boolean chack = false;
             for (int i = 1; i <= n; i++) {
-                if (bellmanFord(n, edges, i)) {
+                if (bellmanFord(n, nodes, i)) {
                     chack = true;
                     break;
                 }
@@ -56,26 +68,25 @@ public class Main {
         bw.flush();
     }
 
-    private static boolean bellmanFord(int N, List<Edge> edges, int start) {
-        long[] dist = new long[N + 1];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[start] = 0;
+    private static boolean bellmanFord(int n, Node[] nodes, int start) {
+        int[] mdt = new int[n + 1];
+        Arrays.fill(mdt, Integer.MAX_VALUE);
+        mdt[start] = 0;
 
-        for (int i = 1; i < N; i++) {
-            boolean updated = false;
-            for (Edge edge : edges) {
-                if (dist[edge.start] != Integer.MAX_VALUE && dist[edge.end] > dist[edge.start] + edge.weight) {
-                    dist[edge.end] = dist[edge.start] + edge.weight;
-                    updated = true;
+        for (int i = 1; i <= n; i++) {
+            boolean chack = false;
+            for (int j = 1; j <= n; j++) {
+                for (Edge edge : nodes[j].edges) {
+                    if (mdt[j] != Integer.MAX_VALUE && mdt[edge.node] > mdt[j] + edge.weight) {
+                        mdt[edge.node] = mdt[j] + edge.weight;
+                        chack = true;
+                        if (i == n) {
+                            return true;
+                        }
+                    }
                 }
             }
-            if (!updated) break;
-        }
-
-        for (Edge edge : edges) {
-            if (dist[edge.start] != Integer.MAX_VALUE && dist[edge.end] > dist[edge.start] + edge.weight) {
-                return true;
-            }
+            if (!chack) break;
         }
 
         return false;

@@ -25,20 +25,20 @@ public class Main {
             }
 
             int value = Integer.parseInt(input);
-            Tree next = root;
+            Tree parent = root;
             while (true) {
-                if (value < next.root) {
-                    if (next.left == null)  {
-                        next.left = new Tree(value);
+                if (value < parent.root) {
+                    if (parent.left == null)  {
+                        parent.left = new Tree(value);
                         break;
                     }
-                    next = next.left;
+                    parent = parent.left;
                 } else {
-                    if (next.right == null) {
-                        next.right = new Tree(value);
+                    if (parent.right == null) {
+                        parent.right = new Tree(value);
                         break;
                     }
-                    next = next.right;
+                    parent = parent.right;
                 }
             }
         }
